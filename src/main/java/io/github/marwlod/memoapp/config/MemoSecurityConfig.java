@@ -63,9 +63,7 @@ public class MemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                     .passwordParameter("password").and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
-                .exceptionHandling()
-                    .accessDeniedPage("/accessDenied");
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 
 }

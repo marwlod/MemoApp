@@ -3,16 +3,13 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Access Denied</title>
+    <title>Opps - something went wrong!</title>
 
 </head>
 <body>
 <form th:action="@{/uniMemo/list}" method="get">
     <button type="Submit">Go to list</button>
 </form>
-<form th:action="@{/logout}" method="get">
-    <button type="Submit">Log out</button>
-</form>
-Access denied
+Something strange happened and your request couldn't be fulfilled.
 </body>
 </html>

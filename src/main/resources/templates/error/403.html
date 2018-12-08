@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Forbidden</title>
+
+</head>
+<body>
+<form th:action="@{/uniMemo/list}" method="get">
+    <button type="Submit">List of memos</button>
+</form>
+<form th:action="@{/logout}" method="get">
+    <button type="Submit">Log out</button>
+</form>
+You are not authorized to view this resource, sorry.
+</body>
+</html>

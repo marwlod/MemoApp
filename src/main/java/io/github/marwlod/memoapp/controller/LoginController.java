@@ -47,9 +47,4 @@ public class LoginController {
         }
         return "register";
     }
-
-    @GetMapping(value = "/accessDenied")
-    public String accessDenied() {
-        return "access-denied";
-    }
 }
