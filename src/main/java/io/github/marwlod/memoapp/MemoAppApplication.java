@@ -7,6 +7,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 @SpringBootApplication
 public class MemoAppApplication extends SpringBootServletInitializer {
 
@@ -15,12 +18,17 @@ public class MemoAppApplication extends SpringBootServletInitializer {
         return builder.sources(MemoAppApplication.class);
     }
 
-    public static void main(String[] args) {
-		SpringApplication.run(MemoAppApplication.class, args);
-	}
-
     @Bean(name = "bCryptPasswordEncoder")
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(MemoAppApplication.class, args);
     }
 }

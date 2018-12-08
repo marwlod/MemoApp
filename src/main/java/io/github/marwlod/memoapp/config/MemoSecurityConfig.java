@@ -32,12 +32,6 @@ public class MemoSecurityConfig extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public MemoSecurityConfig(boolean disableDefaults, DataSource dataSource, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        super(disableDefaults);
-        this.dataSource = dataSource;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()

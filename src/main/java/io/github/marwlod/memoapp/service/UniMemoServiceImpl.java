@@ -6,6 +6,8 @@ import io.github.marwlod.memoapp.repository.UniMemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -20,26 +22,31 @@ public class UniMemoServiceImpl implements UniMemoService {
     }
 
     @Override
+    @Transactional
     public List<UniMemo> getUniMemos() {
         return (List<UniMemo>) uniMemoRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void saveUniMemo(UniMemo uniMemo) {
         uniMemoRepository.save(uniMemo);
     }
 
     @Override
+    @Transactional
     public UniMemo getUniMemoById(Long uniMemoId) {
         return uniMemoRepository.findById(uniMemoId).orElse(null);
     }
 
     @Override
+    @Transactional
     public void deleteUniMemo(Long uniMemoId) {
         uniMemoRepository.deleteById(uniMemoId);
     }
 
     @Override
+    @Transactional
     public List<UniMemo> getUniMemosByOwner(User user) {
         return uniMemoRepository.getUniMemosByOwner(user);
     }

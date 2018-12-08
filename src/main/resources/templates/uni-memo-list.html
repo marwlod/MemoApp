@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
-    <title>Customers list</title>
+    <title>Memo list</title>
 </head>
 <body>
 <form th:action="@{/logout}" method="get">
@@ -22,10 +22,9 @@
 
             <table>
                 <tr>
-                    <th>Title</th>
                     <th>Short description</th>
-                    <th>Content</th>
-                    <th>Owner</th>
+                    <th>More</th>
+                    <th>Date due</th>
                     <th>Action</th>
                 </tr>
 
@@ -34,10 +33,9 @@
                             updateLink=@{/uniMemo/showUpdateForm(uniMemoId=${uniMemo.id})},
                             deleteLink=@{/uniMemo/delete(uniMemoId=${uniMemo.id})}">
                         <tr>
-                            <td th:text="${uniMemo.title}"></td>
                             <td th:text="${uniMemo.shortDescription}"></td>
                             <td th:text="${uniMemo.memoText}"></td>
-                            <td th:text="${uniMemo.owner.firstName}"></td>
+                            <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
                             <td>
                                 <a th:href="${updateLink}">Update</a>
                                 |

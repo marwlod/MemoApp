@@ -1,11 +1,16 @@
 package io.github.marwlod.memoapp.entity;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "role")
+@Getter
+@Setter
 public class Role {
 
     @Id
@@ -24,22 +29,6 @@ public class Role {
     }
 
     public Role(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 }

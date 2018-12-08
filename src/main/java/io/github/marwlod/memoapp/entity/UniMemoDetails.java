@@ -1,10 +1,16 @@
 package io.github.marwlod.memoapp.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "uni_memo_details")
+@Getter
+@Setter
 public class UniMemoDetails {
 
     @Id
@@ -12,62 +18,33 @@ public class UniMemoDetails {
     @Column(name = "uni_memo_details_id")
     private Long id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "due_date")
+    private Date dueDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")
     private Date creationDate;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_modification")
-    private Date lastModification;
+    private Date lastModified;
 
-    @Version
-    @Column(name = "version")
-    private int version;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "uni_memo_id")
+    @OneToOne(mappedBy = "uniMemoDetails",
+            cascade = CascadeType.ALL)
     private UniMemo uniMemo;
 
     public UniMemoDetails() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Date getLastModification() {
-        return lastModification;
-    }
-
-    public void setLastModification(Date lastModification) {
-        this.lastModification = lastModification;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public UniMemo getUniMemo() {
-        return uniMemo;
-    }
-
-    public void setUniMemo(UniMemo uniMemo) {
-        this.uniMemo = uniMemo;
+    @Override
+    public String toString() {
+        return "UniMemoDetails{" +
+                "id=" + id +
+                ", dueDate=" + dueDate +
+                ", creationDate=" + creationDate +
+                ", lastModification=" + lastModified +
+                '}';
     }
 }
