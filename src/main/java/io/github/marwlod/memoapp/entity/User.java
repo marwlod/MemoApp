@@ -21,20 +21,21 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(name = "email")
     @NotEmpty(message = "Email required")
     @Email(message = "Invalid email")
+    @Column(name = "email")
     private String email;
 
+    @NotEmpty(message = "Password required")
     @Column(name = "password")
     private String password;
 
-    @Column(name = "first_name")
     @NotEmpty(message = "First name required")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     @NotEmpty(message = "Last name required")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "enabled")

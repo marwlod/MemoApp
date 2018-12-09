@@ -9,9 +9,9 @@
 <form th:action="@{/register}" method="get">
     <button type="Submit">Register</button>
 </form>
-
+<p th:if="${successMessage}" th:text="${successMessage}"></p>
 <div>
-    <form th:action="@{/login}" method="POST">
+    <form th:action="@{/login}" method="post">
         <h3 th:text="Welcome"></h3>
         <table>
             <tr>
@@ -24,7 +24,7 @@
                 <td th:if="${#httpServletRequest.getParameter('error') != null}">Email and/or password invalid</td>
             </tr>
         </table>
-        <button name="Submit" value="Login" type="Submit" th:text="Login"></button>
+        <button name="Submit" value="Login" type="submit" th:text="Login"></button>
     </form>
 </div>
 </body>

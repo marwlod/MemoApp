@@ -34,16 +34,16 @@ public class LoginController {
     }
 
     @PostMapping(value = "/register")
-    public String createNewUser(@Valid User user, Model model, BindingResult bindingResult) {
+    public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
-            bindingResult.rejectValue("email", "error.user",
+            bindingResult.rejectValue("email", "error.email",
                             "There is already a user registered with the email provided");
         }
         if (!bindingResult.hasErrors()) {
             userService.saveUser(user);
             model.addAttribute("successMessage", "User has been registered successfully");
-            model.addAttribute("user", new User());
+            return "login";
         }
         return "register";
     }
