@@ -2,6 +2,7 @@ package io.github.marwlod.memoapp.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @DiscriminatorValue("uni_memo")
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class UniMemo extends Memo {
 
     @Column(name = "subject")
@@ -25,13 +27,5 @@ public class UniMemo extends Memo {
         super(shortDescription, memoText, owner);
         this.subject = subject;
         this.uniMemoDetails = uniMemoDetails;
-    }
-
-    @Override
-    public String toString() {
-        return "UniMemo{" +
-                "subject='" + subject + '\'' +
-                ", uniMemoDetails=" + uniMemoDetails +
-                "} " + super.toString();
     }
 }

@@ -6,7 +6,6 @@ import io.github.marwlod.memoapp.entity.User;
 import java.util.List;
 
 public interface UniMemoService {
-    List<UniMemo> getUniMemos();
 
     void saveUniMemo(UniMemo uniMemo);
 

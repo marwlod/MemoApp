@@ -1,5 +1,6 @@
 package io.github.marwlod.memoapp.entity;
 
+import io.github.marwlod.memoapp.audit.AbstractMemoAuditable;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Table(name = "uni_memo_details")
 @Getter
 @Setter
-public class UniMemoDetails {
+public class UniMemoDetails extends AbstractMemoAuditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +23,6 @@ public class UniMemoDetails {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "due_date")
     private Date dueDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "creation_date")
-    private Date creationDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_modification")
-    private Date lastModified;
 
     @OneToOne(mappedBy = "uniMemoDetails",
             cascade = CascadeType.ALL)
@@ -43,8 +36,6 @@ public class UniMemoDetails {
         return "UniMemoDetails{" +
                 "id=" + id +
                 ", dueDate=" + dueDate +
-                ", creationDate=" + creationDate +
-                ", lastModification=" + lastModified +
-                '}';
+                '}' + super.toString();
     }
 }

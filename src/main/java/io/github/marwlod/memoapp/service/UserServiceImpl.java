@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 @Service("userService")
-public class UserServiceImpl  implements UserService{
+public class UserServiceImpl  implements UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 

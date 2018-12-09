@@ -5,17 +5,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class MemoAppApplication extends SpringBootServletInitializer {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(MemoAppApplication.class);
+    public static void main(String[] args) {
+        SpringApplication.run(MemoAppApplication.class, args);
     }
 
     @Bean(name = "bCryptPasswordEncoder")
@@ -23,12 +24,13 @@ public class MemoAppApplication extends SpringBootServletInitializer {
         return new BCryptPasswordEncoder();
     }
 
-    @PostConstruct
-    void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(MemoAppApplication.class);
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(MemoAppApplication.class, args);
+    @PostConstruct
+    void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 }
