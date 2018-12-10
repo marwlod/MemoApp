@@ -33,19 +33,19 @@ public class UniMemoController {
     public String listMemos(Model model) {
         List<UniMemo> uniMemos = uniMemoService.getUniMemosByOwner(getCurrentUser());
         model.addAttribute("uniMemos", uniMemos);
-        return "uni-memo-list";
+        return "unimemo-list";
     }
 
     @GetMapping("/showAddForm")
     public String showAddForm(Model model) {
         model.addAttribute("uniMemo", new UniMemo());
-        return "uni-memo-form";
+        return "unimemo-form";
     }
 
     @PostMapping("/saveMemo")
     public String saveMemo(@Valid @ModelAttribute("uniMemo") UniMemo uniMemo, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "uni-memo-form";
+            return "unimemo-form";
         }
         // add current user as owner of the memo
         uniMemo.setOwner(getCurrentUser());
@@ -59,13 +59,20 @@ public class UniMemoController {
     public String showUpdateForm(@RequestParam("uniMemoId") Long uniMemoId, Model model) {
         UniMemo uniMemo = uniMemoService.getUniMemoById(uniMemoId);
         model.addAttribute("uniMemo", uniMemo);
-        return "uni-memo-form";
+        return "unimemo-form";
     }
 
     @GetMapping("/delete")
     public String deleteMemo(@RequestParam("uniMemoId") Long uniMemoId) {
         uniMemoService.deleteUniMemo(uniMemoId);
         return "redirect:/uniMemo/list";
+    }
+
+    @GetMapping("/showDetails")
+    public String showDetails(@RequestParam("uniMemoId") Long uniMemoId, Model model) {
+        UniMemo uniMemo = uniMemoService.getUniMemoById(uniMemoId);
+        model.addAttribute("uniMemo", uniMemo);
+        return "unimemo-details";
     }
 
     private User getCurrentUser() {

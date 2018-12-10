@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Memo details</title>
+</head>
+
+<body>
+<a th:href="@{/uniMemo/list}">Back to list</a>
+<br><br>
+<table>
+    <tr>
+        <td style="font-weight: bold">Date due:</td>
+        <td th:text="${#dates.format(uniMemo.uniMemoDetails.dueDate, 'dd-MM-yyyy')}"></td>
+    </tr>
+
+    <tr>
+        <td style="font-weight: bold">Short description:</td>
+        <td th:text="${uniMemo.shortDescription}"></td>
+    </tr>
+
+    <tr>
+        <td style="font-weight: bold">Memo content:</td>
+        <td style="width: 600px; word-wrap:break-word; text-align: justify">
+            <p th:text="${uniMemo.memoText}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="font-weight: bold">Created on:</td>
+        <td th:text="${#dates.format(uniMemo.uniMemoDetails.createdDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+    </tr>
+
+    <tr>
+        <td style="font-weight: bold">Last modified on:</td>
+        <td th:text="${#dates.format(uniMemo.uniMemoDetails.lastModifiedDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+    </tr>
+</table>
+</body>
+</html>

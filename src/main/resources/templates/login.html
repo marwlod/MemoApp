@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
-    <title>Login Form</title>
+    <title>Login form</title>
 </head>
 
 <body>
@@ -12,7 +12,7 @@
 <p th:if="${successMessage}" th:text="${successMessage}"></p>
 <div>
     <form th:action="@{/login}" method="post">
-        <h3 th:text="Welcome"></h3>
+        <h2>Welcome</h2>
         <table>
             <tr>
                 <td><label for="email"></label></td>

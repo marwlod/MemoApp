@@ -1,0 +1,45 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en-US">
+<head>
+    <title>Memo list</title>
+</head>
+
+<body>
+<form th:action="@{/logout}" method="get">
+    <button type="submit">Log out</button>
+</form>
+<br>
+<h2>MemoApp - memo management tool</h2>
+<form th:action="@{/uniMemo/showAddForm}" method="get">
+    <button type="submit">Add memo</button>
+</form>
+
+<table>
+    <tr>
+        <th>Short description</th>
+        <th>Date due</th>
+        <th>Details</th>
+        <th>Action</th>
+    </tr>
+
+    <th:block th:each="uniMemo : ${uniMemos}">
+        <div th:with="
+                detailsLink=@{/uniMemo/showDetails(uniMemoId=${uniMemo.id})},
+                updateLink=@{/uniMemo/showUpdateForm(uniMemoId=${uniMemo.id})},
+                deleteLink=@{/uniMemo/delete(uniMemoId=${uniMemo.id})}">
+            <tr>
+                <td th:text="${uniMemo.shortDescription}"></td>
+                <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
+                <td><a th:href="${detailsLink}">more</a></td>
+                <td>
+                    <a th:href="${updateLink}">Update</a>
+                    |
+                    <a th:href="${deleteLink}" onclick="if (!(confirm('Are you sure you want to delete memo?'))) return false">Delete</a>
+                </td>
+            </tr>
+        </div>
+    </th:block>
+</table>
+</body>
+</html>

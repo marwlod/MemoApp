@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/register")
-    public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
+    public String createNewUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult.rejectValue("email", "error.email",
