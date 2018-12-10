@@ -5,6 +5,10 @@ import io.github.marwlod.memoapp.entity.User;
 import io.github.marwlod.memoapp.service.UniMemoService;
 import io.github.marwlod.memoapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/uniMemo")
@@ -30,9 +33,9 @@ public class UniMemoController {
     }
 
     @GetMapping("/list")
-    public String listMemos(Model model) {
-        List<UniMemo> uniMemos = uniMemoService.getUniMemosByOwner(getCurrentUser());
-        model.addAttribute("uniMemos", uniMemos);
+    public String listMemos(@PageableDefault(sort = {"uniMemoDetails.dueDate", "shortDescription"}, direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+        Page<UniMemo> page = uniMemoService.getUniMemosByOwner(getCurrentUser(), pageable);
+        model.addAttribute("page", page);
         return "unimemo-list";
     }
 

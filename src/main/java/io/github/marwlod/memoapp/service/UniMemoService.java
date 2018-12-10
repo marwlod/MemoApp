@@ -2,8 +2,8 @@ package io.github.marwlod.memoapp.service;
 
 import io.github.marwlod.memoapp.entity.UniMemo;
 import io.github.marwlod.memoapp.entity.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UniMemoService {
 
@@ -13,5 +13,5 @@ public interface UniMemoService {
 
     void deleteUniMemo(Long uniMemoId);
 
-    List<UniMemo> getUniMemosByOwner(User user);
+    Page<UniMemo> getUniMemosByOwner(User user, Pageable pageable);
 }

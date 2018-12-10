@@ -4,10 +4,11 @@ import io.github.marwlod.memoapp.entity.UniMemo;
 import io.github.marwlod.memoapp.entity.User;
 import io.github.marwlod.memoapp.repository.UniMemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class UniMemoServiceImpl implements UniMemoService {
@@ -40,7 +41,7 @@ public class UniMemoServiceImpl implements UniMemoService {
 
     @Override
     @Transactional
-    public List<UniMemo> getUniMemosByOwner(User user) {
-        return uniMemoRepository.getUniMemosByOwner(user);
+    public Page<UniMemo> getUniMemosByOwner(User user, Pageable pageable) {
+        return uniMemoRepository.getUniMemosByOwner(user, pageable);
     }
 }

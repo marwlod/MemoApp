@@ -17,20 +17,20 @@
 
 <table>
     <tr>
-        <th>Short description</th>
         <th>Date due</th>
+        <th>Short description</th>
         <th>Details</th>
         <th>Action</th>
     </tr>
 
-    <th:block th:each="uniMemo : ${uniMemos}">
+    <th:block th:each="uniMemo : ${page}">
         <div th:with="
                 detailsLink=@{/uniMemo/showDetails(uniMemoId=${uniMemo.id})},
                 updateLink=@{/uniMemo/showUpdateForm(uniMemoId=${uniMemo.id})},
                 deleteLink=@{/uniMemo/delete(uniMemoId=${uniMemo.id})}">
             <tr>
-                <td th:text="${uniMemo.shortDescription}"></td>
                 <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
+                <td th:text="${uniMemo.shortDescription}"></td>
                 <td><a th:href="${detailsLink}">more</a></td>
                 <td>
                     <a th:href="${updateLink}">Update</a>
