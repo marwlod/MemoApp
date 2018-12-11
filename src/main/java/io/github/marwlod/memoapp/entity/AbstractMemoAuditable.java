@@ -1,4 +1,4 @@
-package io.github.marwlod.memoapp.audit;
+package io.github.marwlod.memoapp.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public abstract class AbstractMemoAuditable {
+abstract class AbstractMemoAuditable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate

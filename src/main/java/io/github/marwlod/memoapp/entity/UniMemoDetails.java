@@ -1,6 +1,5 @@
 package io.github.marwlod.memoapp.entity;
 
-import io.github.marwlod.memoapp.audit.AbstractMemoAuditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

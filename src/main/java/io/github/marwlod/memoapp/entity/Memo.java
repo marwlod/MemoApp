@@ -20,7 +20,7 @@ import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "memo_type")
 @Table(name = "memo")
-public abstract class Memo {
+abstract class Memo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +46,7 @@ public abstract class Memo {
     @JoinColumn(name = "memo_owner")
     private User owner;
 
-    public Memo(String shortDescription, String memoText, User owner) {
+    Memo(String shortDescription, String memoText, User owner) {
         this.shortDescription = shortDescription;
         this.memoText = memoText;
         this.owner = owner;
