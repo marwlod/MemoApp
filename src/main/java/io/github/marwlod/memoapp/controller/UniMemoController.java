@@ -36,7 +36,6 @@ public class UniMemoController {
 
     @GetMapping("/list")
     public String listMemos(@PageableDefault(
-            size = 5,
             sort = {"uniMemoDetails.dueDate", "shortDescription"},
             direction = Sort.Direction.ASC)
                                         Pageable pageable, Model model) {
@@ -45,8 +44,7 @@ public class UniMemoController {
         if (sortOrders.size() > 1) {
             Sort.Order firstOrder = sortOrders.get(0);
             Sort.Order secondOrder = sortOrders.get(1);
-            model.addAttribute("firstSortProperty", firstOrder.getProperty());
-            model.addAttribute("secondSortProperty", secondOrder.getProperty());
+            model.addAttribute("sortProperties", firstOrder.getProperty() + "," + secondOrder.getProperty() + "," + firstOrder.getDirection());
             model.addAttribute("sortAsc", firstOrder.getDirection() == Sort.Direction.ASC);
         }
         model.addAttribute("page", page);
