@@ -15,48 +15,55 @@
     <button type="submit">Add memo</button>
 </form>
 <br>
-
-<table>
-    <tr>
-        <th>
-            <a th:href="@{/uniMemo/list(
+<div th:with="detailsFirst='uniMemoDetails.dueDate,shortDescription', descriptionFirst='shortDescription,uniMemoDetails.dueDate'">
+    <table>
+        <tr>
+            <th th:with="sortParam=${detailsFirst+','+(sortAsc?'desc':'asc')}">
+                <a th:href="@{/uniMemo/list(
             page=${page.number},
             size=${page.size},
-            sort=${page.sort.equals(page.sort.ascending())} ? 'uniMemoDetails.dueDate,shortDescription,desc' : 'uniMemoDetails.dueDate,shortDescription,asc')}">Date due</a>
-        </th>
-        <th>
-            <a th:href="@{/uniMemo/list(
+            sort=${sortParam})}"> Date due</a>
+            </th>
+            <th th:with="sortParam=${descriptionFirst+','+(sortAsc?'desc':'asc')}">
+                <a th:href="@{/uniMemo/list(
             page=${page.number},
             size=${page.size},
-            sort=${page.sort.equals(page.sort.ascending())} ? 'shortDescription,uniMemoDetails.dueDate,desc' : 'shortDescription,uniMemoDetails.dueDate,asc')}">Short description</a>
-        </th>
-        <th>Details</th>
-        <th>Action</th>
-    </tr>
+            sort=${sortParam})}">Short description</a>
+            </th>
+            <th>Details</th>
+            <th>Action</th>
+        </tr>
 
-    <th:block th:each="uniMemo : ${page}">
-        <div th:with="
+        <th:block th:each="uniMemo : ${page}">
+            <div th:with="
                 detailsLink=@{/uniMemo/showDetails(uniMemoId=${uniMemo.id})},
                 updateLink=@{/uniMemo/showUpdateForm(uniMemoId=${uniMemo.id})},
                 deleteLink=@{/uniMemo/delete(uniMemoId=${uniMemo.id})}">
-            <tr>
-                <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
-                <td th:text="${uniMemo.shortDescription}"></td>
-                <td><a th:href="${detailsLink}">more</a></td>
-                <td>
-                    <a th:href="${updateLink}">Update</a>
-                    |
-                    <a th:href="${deleteLink}" onclick="if (!(confirm('Are you sure you want to delete memo?'))) return false">Delete</a>
-                </td>
-            </tr>
-        </div>
-    </th:block>
-</table>
-<span th:if="${page.hasPrevious()}">
-    <a th:href="@{/uniMemo/list(page=${page.number - 1}, size=${page.size})}">Previous</a>
-</span>
-<span th:if="${page.hasNext()}">
-    <a th:href="@{/uniMemo/list(page=${page.number + 1}, size=${page.size})}">Next</a>
-</span>
+                <tr>
+                    <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
+                    <td th:text="${uniMemo.shortDescription}"></td>
+                    <td><a th:href="${detailsLink}">more</a></td>
+                    <td>
+                        <a th:href="${updateLink}">Update</a>
+                        |
+                        <a th:href="${deleteLink}" onclick="if (!(confirm('Are you sure you want to delete memo?'))) return false">Delete</a>
+                    </td>
+                </tr>
+            </div>
+        </th:block>
+    </table>
+    <span th:if="${page.hasPrevious()}" th:with="sortParam=${firstSortProperty+','+secondSortProperty+','+(sortAsc?'asc':'desc')}">
+        <a th:href="@{/uniMemo/list(
+            page=${page.number - 1},
+            size=${page.size},
+            sort=${sortParam})}">Previous</a>
+    </span>
+    <span th:if="${page.hasNext()}" th:with="sortParam=${firstSortProperty+','+secondSortProperty+','+(sortAsc?'asc':'desc')}">
+        <a th:href="@{/uniMemo/list(
+            page=${page.number + 1},
+            size=${page.size},
+            sort=${sortParam})}">Next</a>
+    </span>
+</div>
 </body>
 </html>

@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/uniMemo")
@@ -39,6 +41,14 @@ public class UniMemoController {
             direction = Sort.Direction.ASC)
                                         Pageable pageable, Model model) {
         Page<UniMemo> page = uniMemoService.getUniMemosByOwner(getCurrentUser(), pageable);
+        List<Sort.Order> sortOrders = page.getSort().stream().collect(Collectors.toList());
+        if (sortOrders.size() > 1) {
+            Sort.Order firstOrder = sortOrders.get(0);
+            Sort.Order secondOrder = sortOrders.get(1);
+            model.addAttribute("firstSortProperty", firstOrder.getProperty());
+            model.addAttribute("secondSortProperty", secondOrder.getProperty());
+            model.addAttribute("sortAsc", firstOrder.getDirection() == Sort.Direction.ASC);
+        }
         model.addAttribute("page", page);
         return "unimemo-list";
     }
