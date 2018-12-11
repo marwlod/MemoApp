@@ -14,11 +14,22 @@
 <form th:action="@{/uniMemo/showAddForm}" method="get">
     <button type="submit">Add memo</button>
 </form>
+<br>
 
 <table>
     <tr>
-        <th>Date due</th>
-        <th>Short description</th>
+        <th>
+            <a th:href="@{/uniMemo/list(
+            page=${page.number},
+            size=${page.size},
+            sort=${page.sort.equals(page.sort.ascending())} ? 'uniMemoDetails.dueDate,shortDescription,desc' : 'uniMemoDetails.dueDate,shortDescription,asc')}">Date due</a>
+        </th>
+        <th>
+            <a th:href="@{/uniMemo/list(
+            page=${page.number},
+            size=${page.size},
+            sort=${page.sort.equals(page.sort.ascending())} ? 'shortDescription,uniMemoDetails.dueDate,desc' : 'shortDescription,uniMemoDetails.dueDate,asc')}">Short description</a>
+        </th>
         <th>Details</th>
         <th>Action</th>
     </tr>
@@ -41,5 +52,11 @@
         </div>
     </th:block>
 </table>
+<span th:if="${page.hasPrevious()}">
+    <a th:href="@{/uniMemo/list(page=${page.number - 1}, size=${page.size})}">Previous</a>
+</span>
+<span th:if="${page.hasNext()}">
+    <a th:href="@{/uniMemo/list(page=${page.number + 1}, size=${page.size})}">Next</a>
+</span>
 </body>
 </html>

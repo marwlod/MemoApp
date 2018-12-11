@@ -33,7 +33,11 @@ public class UniMemoController {
     }
 
     @GetMapping("/list")
-    public String listMemos(@PageableDefault(sort = {"uniMemoDetails.dueDate", "shortDescription"}, direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+    public String listMemos(@PageableDefault(
+            size = 5,
+            sort = {"uniMemoDetails.dueDate", "shortDescription"},
+            direction = Sort.Direction.ASC)
+                                        Pageable pageable, Model model) {
         Page<UniMemo> page = uniMemoService.getUniMemosByOwner(getCurrentUser(), pageable);
         model.addAttribute("page", page);
         return "unimemo-list";
