@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import static io.github.marwlod.memoapp.config.Constants.TEXT_LENGTH;
+import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 
 @Entity
 @DiscriminatorValue("uni_memo")

@@ -9,8 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import static io.github.marwlod.memoapp.config.Constants.LOB_LENGTH;
-import static io.github.marwlod.memoapp.config.Constants.TEXT_LENGTH;
+import static io.github.marwlod.memoapp.entity.EntityUtil.LOB_LENGTH;
+import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 
 @Entity
 @NoArgsConstructor

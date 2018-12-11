@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.marwlod.memoapp.config.Constants.TEXT_LENGTH;
+import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 
 @Entity
 @NoArgsConstructor

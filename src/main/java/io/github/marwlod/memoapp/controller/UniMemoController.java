@@ -56,8 +56,6 @@ public class UniMemoController {
         }
         // add current user as owner of the memo
         uniMemo.setOwner(getCurrentUser());
-
-        // save memo to db
         uniMemoService.saveUniMemo(uniMemo);
         return "redirect:/uniMemo/list";
     }
