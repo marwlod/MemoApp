@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Calendar;
@@ -53,7 +54,8 @@ public class LoginController {
     public String createNewUser(@Valid @ModelAttribute("user") User user,
                                 BindingResult bindingResult,
                                 Model model,
-                                WebRequest webRequest) {
+                                WebRequest webRequest,
+                                RedirectAttributes attributes) {
 
         // check if email already in database
         User userExists = userService.findUserByEmail(user.getEmail());
@@ -78,8 +80,8 @@ public class LoginController {
             }
             // email sent
             String message = messageSource.getMessage("message.reg.success", null, locale);
-            model.addAttribute("successMessage", message);
-            return "login";
+            attributes.addFlashAttribute("successMessage", message);
+            return "redirect:/login";
         }
 
         // if any errors detected try again (displaying error messages handled by thymeleaf)
@@ -89,7 +91,8 @@ public class LoginController {
     @GetMapping(value = "/confirmRegistration")
     public String confirmRegistration(@RequestParam("token") String token,
                                       Model model,
-                                      WebRequest webRequest) {
+                                      WebRequest webRequest,
+                                      RedirectAttributes attributes) {
         Locale locale = webRequest.getLocale();
 
         // try to get token object, if failed -> invalid token string
@@ -113,7 +116,7 @@ public class LoginController {
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
         String message = messageSource.getMessage("message.reg.verified", null, locale);
-        model.addAttribute("successMessage", message);
-        return "login";
+        attributes.addFlashAttribute("successMessage", message);
+        return "redirect:/login";
     }
 }

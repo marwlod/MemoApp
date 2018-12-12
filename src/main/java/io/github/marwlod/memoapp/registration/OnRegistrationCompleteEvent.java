@@ -10,7 +10,7 @@ import java.util.Locale;
 @Getter
 @Setter
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
-    // event triggered by start of registration process for sending email
+    // event triggered by start of registration process, used for sending email
 
     private User user;
     private Locale locale;
