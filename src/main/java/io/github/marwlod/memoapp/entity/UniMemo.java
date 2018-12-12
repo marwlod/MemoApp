@@ -21,11 +21,12 @@ import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 public class UniMemo extends Memo {
     // particular kind of memo - university memo
 
-    @NotEmpty(message = "Field required")
-    @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")
+    @NotEmpty
+    @Size(max = TEXT_LENGTH)
     @Column(name = "subject")
     private String subject;
 
+    // also check validity of that object's fields
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "uni_memo_details_id")

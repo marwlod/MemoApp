@@ -31,15 +31,15 @@ abstract class Memo {
     @Column(name = "memo_id")
     private Long id;
 
-    @NotEmpty(message = "Field required")
-    @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")
+    @NotEmpty
+    @Size(max = TEXT_LENGTH)
     @Column(name = "short_description")
     private String shortDescription;
 
     // longer text field
     @Lob
-    @NotEmpty(message = "Field required")
-    @Size(max = LOB_LENGTH, message = "too long didn''t read, maximum " + LOB_LENGTH + " characters")
+    @NotEmpty
+    @Size(max = LOB_LENGTH)
     @Column(name = "memo_text", length = LOB_LENGTH)
     private String memoText;
 

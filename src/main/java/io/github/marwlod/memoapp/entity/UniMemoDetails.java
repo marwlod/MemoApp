@@ -24,8 +24,8 @@ public class UniMemoDetails extends AbstractMemoAuditable {
     private Long id;
 
     // can only be in the future
-    @NotNull(message = "Field required")
-    @Future(message = "Date due cannot be in the past nor today")
+    @NotNull
+    @Future
     @Temporal(value = TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "due_date")

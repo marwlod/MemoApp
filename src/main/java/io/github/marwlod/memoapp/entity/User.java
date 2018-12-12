@@ -27,24 +27,24 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @NotEmpty(message = "Email required")
-    @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")
-    @Email(message = "Invalid email")
+    @NotEmpty
+    @Size(max = TEXT_LENGTH)
+    @Email
     @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "Password required")
-    @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")
+    @NotEmpty
+    @Size(max = TEXT_LENGTH)
     @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "First name required")
-    @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")
+    @NotEmpty
+    @Size(max = TEXT_LENGTH)
     @Column(name = "first_name")
     private String firstName;
 
-    @NotEmpty(message = "Last name required")
-    @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")
+    @NotEmpty
+    @Size(max = TEXT_LENGTH)
     @Column(name = "last_name")
     private String lastName;
 
