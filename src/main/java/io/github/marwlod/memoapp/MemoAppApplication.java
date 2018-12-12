@@ -16,7 +16,10 @@ import java.util.TimeZone;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableSpringDataWebSupport
-@PropertySource(value = {"classpath:/custom.properties", "classpath:/gmail.properties"})
+@PropertySource(value = {
+        "classpath:messages.properties",
+        "classpath:custom.properties",
+        "classpath:gmail.properties" })
 public class MemoAppApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -33,6 +36,7 @@ public class MemoAppApplication extends SpringBootServletInitializer {
         return builder.sources(MemoAppApplication.class);
     }
 
+    // resolve timezone database problems
     @PostConstruct
     void init() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));

@@ -29,9 +29,10 @@ public class LoginController {
 
     private MessageSource messageSource;
 
-
     @Autowired
-    public LoginController(UserService userService, ApplicationEventPublisher applicationEventPublisher, MessageSource messageSource) {
+    public LoginController(UserService userService,
+                           ApplicationEventPublisher applicationEventPublisher,
+                           MessageSource messageSource) {
         this.userService = userService;
         this.applicationEventPublisher = applicationEventPublisher;
         this.messageSource = messageSource;
@@ -41,7 +42,6 @@ public class LoginController {
     public String login(){
         return "login";
     }
-
 
     @GetMapping(value= "/register")
     public String register(Model model){
@@ -54,45 +54,66 @@ public class LoginController {
                                 BindingResult bindingResult,
                                 Model model,
                                 WebRequest webRequest) {
+
+        // check if email already in database
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
-            bindingResult.rejectValue("email", "error.email",
-                            "There is already a user registered with the email provided");
+            bindingResult.rejectValue("email", "message.reg.email-exist");
         }
+
+        // error-free path
         if (!bindingResult.hasErrors()) {
+            // save (not enabled yet) user to database
             User registered = userService.saveUser(user);
+            Locale locale = webRequest.getLocale();
             try {
                 String appUrl = webRequest.getContextPath();
+                // tell the listener that it can start preparing email to send
                 applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, webRequest.getLocale(), appUrl));
             } catch (Exception e) {
-                model.addAttribute("emailError", "Java mail configuration error");
+                // the listener couldn't hear our prayers
+                String message = messageSource.getMessage("message.reg.email-error", null, locale);
+                model.addAttribute("emailNotSent", message);
                 return "register";
             }
-            model.addAttribute("successMessage", "User has been registered successfully");
+            // email sent
+            String message = messageSource.getMessage("message.reg.success", null, locale);
+            model.addAttribute("successMessage", message);
             return "login";
         }
+
+        // if any errors detected try again (displaying error messages handled by thymeleaf)
         return "register";
     }
 
     @GetMapping(value = "/confirmRegistration")
-    public String confirmRegistration(@RequestParam("token") String token, Model model, WebRequest webRequest) {
+    public String confirmRegistration(@RequestParam("token") String token,
+                                      Model model,
+                                      WebRequest webRequest) {
         Locale locale = webRequest.getLocale();
 
+        // try to get token object, if failed -> invalid token string
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) {
-            String message = messageSource.getMessage("verification.message.invalidToken", null, locale);
-            model.addAttribute("message", message);
+            String message = messageSource.getMessage("message.reg.invalid-token", null, locale);
+            model.addAttribute("failMessage", message);
             return "user-not-verified";
         }
-        User user = verificationToken.getUser();
+
         Calendar calendar = Calendar.getInstance();
+        // if token expired
         if ((verificationToken.getExpirationDate().getTime() - calendar.getTime().getTime()) <= 0) {
-            String message = messageSource.getMessage("verification.message.expiredToken", null, locale);
-            model.addAttribute("message", message);
+            String message = messageSource.getMessage("message.reg.expired-token", null, locale);
+            model.addAttribute("failMessage", message);
             return "user-not-verified";
         }
+
+        // user verified -> update in database
+        User user = verificationToken.getUser();
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
+        String message = messageSource.getMessage("message.reg.verified", null, locale);
+        model.addAttribute("successMessage", message);
         return "login";
     }
 }

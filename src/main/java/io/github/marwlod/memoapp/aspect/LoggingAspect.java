@@ -27,20 +27,24 @@ public class LoggingAspect {
     @Pointcut("forControllerPackage() || forServicePackage() || forRepositoryPackage()")
     private void forAppFlow() {}
 
+    // keep track of what methods have been invoked, with what parameters and when
     @Before("forAppFlow()")
     public void before(JoinPoint joinPoint) {
         logger.info("@Before: " + joinPoint.getSignature().toShortString());
         Object[] args = joinPoint.getArgs();
 
+        int i = 0;
         for (Object arg : args) {
-            logger.info(arg.toString());
+            logger.info("@Before arg" + (i++) + " :" + arg.toString());
         }
     }
 
+    // keep track of methods returning and display returned results
     @AfterReturning(pointcut = "forAppFlow()",
                     returning = "result")
-    public void afterReturning(JoinPoint joinPoint, Object result) {
+    public void afterReturning(JoinPoint joinPoint,
+                               Object result) {
         logger.info("@AfterReturning: " + joinPoint.getSignature().toShortString());
-        logger.info("Result: " + result);
+        logger.info("@AfterReturning result: " + result);
     }
 }
