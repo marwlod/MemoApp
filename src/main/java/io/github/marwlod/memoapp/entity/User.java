@@ -48,7 +48,7 @@ public class User {
     private String lastName;
 
     @Column(name = "enabled")
-    private int enabled;
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER,
                 cascade = CascadeType.ALL)
@@ -61,12 +61,12 @@ public class User {
             cascade = CascadeType.ALL)
     private List<Memo> memos;
 
-    public User(String email, String password, String firstName, String lastName, int enabled, Set<Role> roles, List<Memo> memos) {
+    public User(String email, String password, String firstName, String lastName, boolean enabled, Set<Role> roles, List<Memo> memos) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.enabled = enabled;
+        this.enabled = false;
         this.roles = roles;
         this.memos = memos;
     }

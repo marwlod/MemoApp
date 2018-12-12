@@ -2,8 +2,10 @@ package io.github.marwlod.memoapp.service;
 
 import io.github.marwlod.memoapp.entity.Role;
 import io.github.marwlod.memoapp.entity.User;
+import io.github.marwlod.memoapp.entity.VerificationToken;
 import io.github.marwlod.memoapp.repository.RoleRepository;
 import io.github.marwlod.memoapp.repository.UserRepository;
+import io.github.marwlod.memoapp.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 @Service("userService")
-public class UserServiceImpl  implements UserService {
+public class UserServiceImpl implements UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -21,11 +23,14 @@ public class UserServiceImpl  implements UserService {
 
     private RoleRepository roleRepository;
 
+    private VerificationTokenRepository verificationTokenRepository;
+
     @Autowired
-    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleRepository roleRepository, VerificationTokenRepository verificationTokenRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.verificationTokenRepository = verificationTokenRepository;
     }
 
     @Override
@@ -36,16 +41,32 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     @Transactional
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setEnabled(1);
         Role role = roleRepository.findByName("USER");
         if (role == null) {
             role = new Role();
             role.setName("USER");
         }
         user.setRoles(new HashSet<>(Collections.singletonList(role)));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
+    @Override
+    @Transactional
+    public void createVerificationToken(User user, String token) {
+        VerificationToken verificationToken = new VerificationToken(token, user);
+        verificationTokenRepository.save(verificationToken);
+    }
+
+    @Override
+    @Transactional
+    public VerificationToken getVerificationToken(String token) {
+        return verificationTokenRepository.findByToken(token);
+    }
+
+    @Override
+    public void saveRegisteredUser(User user) {
+        userRepository.save(user);
+    }
 }

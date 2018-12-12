@@ -71,12 +71,19 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- getter and setter annotations -->
+		<!-- getter/setter etc. annotations -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- mail sender -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -1,0 +1,12 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>User not verified</title>
+</head>
+<body>
+    <h1 th:text="${message}">Error message</h1>
+    <a th:href="@{/register.html}">Sign up</a>
+</body>
+</html>
