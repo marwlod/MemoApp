@@ -7,9 +7,16 @@
 </head>
 
 <body>
-    <form th:action="@{/login}" method="get">
-        <button type="submit" th:text="#{button.login}">Login Page</button>
-    </form>
+    <table>
+        <tr>
+            <td>
+                <form th:action="@{/login}" method="get">
+                    <button type="submit" th:text="#{button.login}">Login Page</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
     <form autocomplete="off" action="#" th:action="@{/register}"
           th:object="${user}" method="post" role="form">
         <h2 th:text="#{message.register.title}">Registration Form</h2>
