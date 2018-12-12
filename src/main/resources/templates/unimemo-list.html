@@ -7,18 +7,47 @@
 </head>
 
 <body>
-    <form th:action="@{/logout}" method="get">
-        <button type="submit" th:text="#{button.logout}">Log out</button>
-    </form>
+    <table>
+        <tr>
+            <td>
+                <!-- logout button -->
+                <form th:action="@{/logout}" method="get">
+                    <button type="submit" th:text="#{button.logout}">Log out</button>
+                </form>
+            </td>
+
+            <td>
+                <!-- button for choosing language while not changing other parameters -->
+                <form style="padding-left: 2em;" method="get">
+                    <label th:with="langString=${#httpServletRequest.getParameter('lang')}">
+                        <select name="lang">
+                            <option value="en" th:text="English"
+                                    th:selected="${#locale.getLanguage().equals('en')}">en</option>
+                            <option value="pl" th:text="polski"
+                                    th:selected="${#locale.getLanguage().equals('pl')}">pl</option>
+                        </select>
+                    </label>
+                    <input type="hidden" name="page" th:value="${page.number}">
+                    <input type="hidden" name="sort" th:value="${sortProperties}">
+                    <input type="hidden" name="size" th:value="${page.size}">
+                    <input type="submit" th:value="#{button.lang-change}"/>
+                </form>
+            </td>
+        </tr>
+    </table>
     <br>
     <h2 th:text="#{message.unimemolist.body}">MemoApp - memo management tool</h2>
+
+    <!-- button for adding new memo -->
     <form th:action="@{/uniMemo/showAddForm}" method="get">
         <button type="submit" th:text="#{button.add}">Add memo</button>
     </form>
+
     <br>
-    <div th:with="detailsFirst='uniMemoDetails.dueDate,shortDescription', descriptionFirst='shortDescription,uniMemoDetails.dueDate'">
+    <div th:unless="${page.content.size() == 0}" th:with="detailsFirst='uniMemoDetails.dueDate,shortDescription', descriptionFirst='shortDescription,uniMemoDetails.dueDate'">
         <table>
             <tr>
+                <!-- hyperlinks for changing sort order and direction -->
                 <th th:with="sortParam=${detailsFirst+','+(sortAsc?'desc':'asc')}">
                     <a th:href="@{/uniMemo/list(
                 page=${page.number},
@@ -35,6 +64,7 @@
                 <th th:text="#{unimemolist.action}">Action</th>
             </tr>
 
+            <!-- table content (memo fields data with links for additional information, update and delete) -->
             <th:block th:each="uniMemo : ${page}">
                 <div th:with="
                     detailsLink=@{/uniMemo/showDetails(uniMemoId=${uniMemo.id})},
@@ -54,6 +84,8 @@
                 </div>
             </th:block>
         </table>
+
+        <!-- previous page and next page buttons -->
         <span th:if="${page.hasPrevious()}">
             <a th:href="@{/uniMemo/list(
                 page=${page.number - 1},
@@ -67,7 +99,9 @@
                 sort=${sortProperties})}">Next</a>
         </span>
     </div>
-    <div>
+
+    <!-- select amount of memos per page -->
+    <div th:unless="${page.content.size() == 0}">
         <form method="get">
             <br><br><br><br>
             <span th:text="#{unimemolist.change-size}">Memo count per page:</span>

@@ -7,11 +7,34 @@
 </head>
 
 <body>
-    <form th:action="@{/register}" method="get">
-        <button type="submit" th:text="#{button.register}">Register</button>
-    </form>
+    <table>
+        <tr>
+            <td>
+                <form th:action="@{/register}" method="get">
+                    <button type="submit" th:text="#{button.register}">Register</button>
+                </form>
+            </td>
+
+            <td>
+                <!-- button for choosing language -->
+                <form style="padding-left: 2em;" method="get">
+                    <label th:with="langString=${#httpServletRequest.getParameter('lang')}">
+                        <select name="lang">
+                            <option value="en" th:text="English"
+                                    th:selected="${#locale.getLanguage().equals('en')}">en</option>
+                            <option value="pl" th:text="polski"
+                                    th:selected="${#locale.getLanguage().equals('pl')}">pl</option>
+                        </select>
+                    </label>
+                    <input type="submit" th:value="#{button.lang-change}"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+
     <p th:if="${successMessage}" th:text="${successMessage}"></p>
     <div>
+        <!-- login form -->
         <form th:action="@{/login}" method="post">
             <h2 th:text="#{message.welcome}">Welcome</h2>
             <table>
