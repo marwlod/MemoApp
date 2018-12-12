@@ -3,16 +3,16 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Forbidden</title>
-
+    <title th:text="#{message.error.forbidden.title}">Forbidden</title>
 </head>
+
 <body>
-<form th:action="@{/uniMemo/list}" method="get">
-    <button type="Submit">List of memos</button>
-</form>
-<form th:action="@{/logout}" method="get">
-    <button type="Submit">Log out</button>
-</form>
-You are not authorized to view this resource, sorry.
+    <form th:action="@{/uniMemo/list}" method="get">
+        <button type="submit" th:text="#{button.list}">Memo list</button>
+    </form>
+    <form th:action="@{/logout}" method="get">
+        <button type="submit" th:text="#{button.logout}">Log out</button>
+    </form>
+    <h3 th:text="#{message.error.forbidden.body}">Forbidden</h3>
 </body>
 </html>

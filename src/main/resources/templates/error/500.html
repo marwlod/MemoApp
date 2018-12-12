@@ -3,13 +3,13 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Internal server error</title>
-
+    <title th:text="#{message.error.internal-server.title}">Internal server error</title>
 </head>
+
 <body>
-<form th:action="@{/uniMemo/list}" method="get">
-    <button type="Submit">List of memos</button>
-</form>
-Something went wrong on the server side, working on fixing the issue, stay tuned!
+    <form th:action="@{/uniMemo/list}" method="get">
+        <button type="Submit" th:text="#{button.list}">Memo list</button>
+    </form>
+    <h3 th:text="#{message.error.internal-server.body}">Internal server error</h3>
 </body>
 </html>

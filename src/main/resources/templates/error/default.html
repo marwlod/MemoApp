@@ -3,13 +3,13 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Opps - something went wrong!</title>
-
+    <title th:text="#{message.error.default.title}">Error</title>
 </head>
+
 <body>
-<form th:action="@{/uniMemo/list}" method="get">
-    <button type="Submit">Go to list</button>
-</form>
-Something strange happened and your request couldn't be fulfilled.
+    <form th:action="@{/uniMemo/list}" method="get">
+        <button type="Submit" th:text="#{button.list}">Go to list</button>
+    </form>
+    <h3 th:text="#{message.error.default.body}">Error</h3>
 </body>
 </html>

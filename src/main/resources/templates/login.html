@@ -3,30 +3,30 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Login form</title>
+    <title th:text="#{message.login.title}">Login form</title>
 </head>
 
 <body>
-<form th:action="@{/register}" method="get">
-    <button type="Submit">Register</button>
-</form>
-<p th:if="${successMessage}" th:text="${successMessage}"></p>
-<div>
-    <form th:action="@{/login}" method="post">
-        <h2>Welcome</h2>
-        <table>
-            <tr>
-                <td><label for="email"></label></td>
-                <td><input id="email" type="text" name="email" th:placeholder="Email"/> <br/></td>
-            </tr>
-            <tr>
-                <td><label for="password"></label></td>
-                <td><input type="password" th:placeholder="Password" id="password" name="password"/></td>
-                <td th:if="${#httpServletRequest.getParameter('error') != null}">Email and/or password invalid</td>
-            </tr>
-        </table>
-        <button name="Submit" value="Login" type="submit" th:text="Login"></button>
+    <form th:action="@{/register}" method="get">
+        <button type="submit" th:text="#{button.register}">Register</button>
     </form>
-</div>
+    <p th:if="${successMessage}" th:text="${successMessage}"></p>
+    <div>
+        <form th:action="@{/login}" method="post">
+            <h2 th:text="#{message.welcome}">Welcome</h2>
+            <table>
+                <tr>
+                    <td><label for="email"></label></td>
+                    <td><input id="email" type="text" name="email" th:placeholder="#{placeholder.email}"/><br/></td>
+                </tr>
+                <tr>
+                    <td><label for="password"></label></td>
+                    <td><input type="password" th:placeholder="#{placeholder.password}" id="password" name="password"/></td>
+                    <td th:if="${#httpServletRequest.getParameter('error') != null}" th:text="#{message.error.email-invalid}">Email and/or password invalid</td>
+                </tr>
+            </table>
+            <button type="submit" th:text="#{button.login}"></button>
+        </form>
+    </div>
 </body>
 </html>
