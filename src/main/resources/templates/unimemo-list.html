@@ -3,88 +3,87 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Memo list</title>
+    <title th:text="#{message.unimemolist.title}">Memo list</title>
 </head>
 
 <body>
-<form th:action="@{/logout}" method="get">
-    <button type="submit">Log out</button>
-</form>
-<br>
-<h2>MemoApp - memo management tool</h2>
-<form th:action="@{/uniMemo/showAddForm}" method="get">
-    <button type="submit">Add memo</button>
-</form>
-<br>
-<div th:with="detailsFirst='uniMemoDetails.dueDate,shortDescription', descriptionFirst='shortDescription,uniMemoDetails.dueDate'">
-    <table>
-        <tr>
-            <th th:with="sortParam=${detailsFirst+','+(sortAsc?'desc':'asc')}">
-                <a th:href="@{/uniMemo/list(
-            page=${page.number},
-            size=${page.size},
-            sort=${sortParam})}"> Date due</a>
-            </th>
-            <th th:with="sortParam=${descriptionFirst+','+(sortAsc?'desc':'asc')}">
-                <a th:href="@{/uniMemo/list(
-            page=${page.number},
-            size=${page.size},
-            sort=${sortParam})}">Short description</a>
-            </th>
-            <th>Details</th>
-            <th>Action</th>
-        </tr>
-
-        <th:block th:each="uniMemo : ${page}">
-            <div th:with="
-                detailsLink=@{/uniMemo/showDetails(uniMemoId=${uniMemo.id})},
-                updateLink=@{/uniMemo/showUpdateForm(uniMemoId=${uniMemo.id})},
-                deleteLink=@{/uniMemo/delete(uniMemoId=${uniMemo.id})}">
-                <tr>
-                    <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
-                    <td th:text="${uniMemo.shortDescription}"></td>
-                    <td><a th:href="${detailsLink}">more</a></td>
-                    <td>
-                        <a th:href="${updateLink}">Update</a>
-                        |
-                        <a th:href="${deleteLink}" onclick="if (!(confirm('Are you sure you want to delete memo?'))) return false">Delete</a>
-                    </td>
-                </tr>
-            </div>
-        </th:block>
-    </table>
-    <span th:if="${page.hasPrevious()}">
-        <a th:href="@{/uniMemo/list(
-            page=${page.number - 1},
-            size=${page.size},
-            sort=${sortProperties})}">Previous</a>
-    </span>
-    <span th:if="${page.hasNext()}">
-        <a th:href="@{/uniMemo/list(
-            page=${page.number + 1},
-            size=${page.size},
-            sort=${sortProperties})}">Next</a>
-    </span>
-</div>
-<div>
-    <form method="get">
-        <br><br><br><br>
-        <span>Memo count per page</span>
-        <br>
-        <label>
-            <input type="hidden" name="page" th:value="${page.number}">
-            <select name="size">
-                <option value="5" th:selected="${page.size == 5}">5</option>
-                <option value="10" th:selected="${page.size == 10}">10</option>
-                <option value="15" th:selected="${page.size == 15}">15</option>
-                <option value="20" th:selected="${page.size == 20}">20</option>
-            </select>
-            <input type="hidden" name="sort" th:value="${sortProperties}">
-        </label>
-        <input type="submit" value="submit"/>
-
+    <form th:action="@{/logout}" method="get">
+        <button type="submit" th:text="#{button.logout}">Log out</button>
     </form>
-</div>
+    <br>
+    <h2 th:text="#{message.unimemolist.body}">MemoApp - memo management tool</h2>
+    <form th:action="@{/uniMemo/showAddForm}" method="get">
+        <button type="submit" th:text="#{button.add}">Add memo</button>
+    </form>
+    <br>
+    <div th:with="detailsFirst='uniMemoDetails.dueDate,shortDescription', descriptionFirst='shortDescription,uniMemoDetails.dueDate'">
+        <table>
+            <tr>
+                <th th:with="sortParam=${detailsFirst+','+(sortAsc?'desc':'asc')}">
+                    <a th:href="@{/uniMemo/list(
+                page=${page.number},
+                size=${page.size},
+                sort=${sortParam})}" th:text="#{unimemodetails.due-date}"> Date due</a>
+                </th>
+                <th th:with="sortParam=${descriptionFirst+','+(sortAsc?'desc':'asc')}">
+                    <a th:href="@{/uniMemo/list(
+                page=${page.number},
+                size=${page.size},
+                sort=${sortParam})}" th:text="#{unimemo.short-description}">Short description</a>
+                </th>
+                <th th:text="#{unimemolist.details}">Details</th>
+                <th th:text="#{unimemolist.action}">Action</th>
+            </tr>
 
+            <th:block th:each="uniMemo : ${page}">
+                <div th:with="
+                    detailsLink=@{/uniMemo/showDetails(uniMemoId=${uniMemo.id})},
+                    updateLink=@{/uniMemo/showUpdateForm(uniMemoId=${uniMemo.id})},
+                    deleteLink=@{/uniMemo/delete(uniMemoId=${uniMemo.id})}">
+                    <tr>
+                        <td th:text="${uniMemo.uniMemoDetails.dueDate}"></td>
+                        <td th:text="${uniMemo.shortDescription}"></td>
+                        <td><a th:href="${detailsLink}" th:text="#{unimemolist.details-link}">more</a></td>
+                        <td>
+                            <a th:href="${updateLink}" th:text="#{unimemolist.update-link}">Update</a>
+                            |
+                            <a th:href="${deleteLink}" th:text="#{unimemolist.delete-link}"
+                               onclick="if (!(confirm('Are you sure you want to delete memo?'))) return false">Delete</a>
+                        </td>
+                    </tr>
+                </div>
+            </th:block>
+        </table>
+        <span th:if="${page.hasPrevious()}">
+            <a th:href="@{/uniMemo/list(
+                page=${page.number - 1},
+                size=${page.size},
+                sort=${sortProperties})}">Previous</a>
+        </span>
+        <span th:if="${page.hasNext()}">
+            <a th:href="@{/uniMemo/list(
+                page=${page.number + 1},
+                size=${page.size},
+                sort=${sortProperties})}">Next</a>
+        </span>
+    </div>
+    <div>
+        <form method="get">
+            <br><br><br><br>
+            <span th:text="#{unimemolist.change-size}">Memo count per page:</span>
+            <br>
+            <label>
+                <input type="hidden" name="page" th:value="${page.number}">
+                <select name="size">
+                    <option value="5" th:selected="${page.size == 5}">5</option>
+                    <option value="10" th:selected="${page.size == 10}">10</option>
+                    <option value="15" th:selected="${page.size == 15}">15</option>
+                    <option value="20" th:selected="${page.size == 20}">20</option>
+                </select>
+                <input type="hidden" name="sort" th:value="${sortProperties}">
+            </label>
+            <input type="submit" th:value="#{button.submit}"/>
+        </form>
+    </div>
 </body>
 </html>

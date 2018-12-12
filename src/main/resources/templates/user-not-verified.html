@@ -3,10 +3,14 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>User not verified</title>
+    <title th:text="#{message.error.not-verified.title}">User not verified</title>
 </head>
+
 <body>
     <h1 th:text="${failMessage}">Fail message</h1>
-    <a th:href="@{/register.html}">Registration form</a>
+    <br><br>
+    <form th:action="@{/register}" method="get">
+        <button type="submit" th:text="#{button.register}">Register</button>
+    </form>
 </body>
 </html>

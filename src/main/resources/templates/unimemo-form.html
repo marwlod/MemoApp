@@ -3,51 +3,51 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Memo form</title>
+    <title th:text="#{message.unimemoform.title}">UniMemo form</title>
 </head>
 
 <body>
-<form th:action="@{/uniMemo/list}" method="get">
-    <button type="submit">Back to list</button>
-</form>
-<br>
-<h2>UniMemo form</h2>
+    <form th:action="@{/uniMemo/list}" method="get">
+        <button type="submit" th:text="#{button.list}">Back to list</button>
+    </form>
+    <br>
+    <h2 th:text="#{message.unimemoform.title}">UniMemo form</h2>
 
-<form id="uniMemoForm" action="#" th:action="@{/uniMemo/saveMemo}" th:object="${uniMemo}" th:method="POST">
-    <input type="hidden" th:field="*{id}"/>
-    <input type="hidden" th:field="*{uniMemoDetails.id}">
-    <table>
-        <tbody>
-            <tr>
-                <td><label for="subject">Subject:</label></td>
-                <td><input id="subject" type="text" th:field="*{subject}"/></td>
-                <td th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></td>
-            </tr>
+    <form id="uniMemoForm" action="#" th:action="@{/uniMemo/saveMemo}" th:object="${uniMemo}" th:method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{uniMemoDetails.id}">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="subject" th:text="#{unimemo.subject}">Subject:</label></td>
+                    <td><input id="subject" type="text" th:field="*{subject}"/></td>
+                    <td th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></td>
+                </tr>
 
-            <tr>
-                <td><label for="shortDescription">Short description:</label></td>
-                <td><input id="shortDescription" type="text" th:field="*{shortDescription}"/></td>
-                <td th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></td>
-            </tr>
+                <tr>
+                    <td><label for="shortDescription" th:text="#{unimemo.short-description}">Short description:</label></td>
+                    <td><input id="shortDescription" type="text" th:field="*{shortDescription}"/></td>
+                    <td th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></td>
+                </tr>
 
-            <tr>
-                <td><label for="memoText">Content:</label></td>
-                <td><textarea id="memoText" name="memoText" form="uniMemoForm" rows="10" cols="50" th:field="*{memoText}"></textarea></td>
-                <td th:if="${#fields.hasErrors('memoText')}" th:errors="*{memoText}"></td>
-            </tr>
+                <tr>
+                    <td><label for="memoText" th:text="#{unimemo.memo-text}">Content:</label></td>
+                    <td><textarea id="memoText" name="memoText" form="uniMemoForm" rows="10" cols="50" th:field="*{memoText}"></textarea></td>
+                    <td th:if="${#fields.hasErrors('memoText')}" th:errors="*{memoText}"></td>
+                </tr>
 
-            <tr>
-                <td><label for="dueDate">Date due:</label></td>
-                <td><input id="dueDate" type="date" th:field="*{uniMemoDetails.dueDate}"/></td>
-                <td th:if="${#fields.hasErrors('uniMemoDetails.dueDate')}" th:errors="*{uniMemoDetails.dueDate}"></td>
-            </tr>
+                <tr>
+                    <td><label for="dueDate" th:text="#{unimemodetails.due-date}">Date due:</label></td>
+                    <td><input id="dueDate" type="date" th:field="*{uniMemoDetails.dueDate}"/></td>
+                    <td th:if="${#fields.hasErrors('uniMemoDetails.dueDate')}" th:errors="*{uniMemoDetails.dueDate}"></td>
+                </tr>
 
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Save" class="save"></td>
-            </tr>
-        </tbody>
-    </table>
-</form>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" th:value="#{button.save}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 </body>
 </html>

@@ -20,10 +20,10 @@ public class MemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Value("${memo.queries.users}")
+    @Value("${query.users}")
     private String usersQuery;
 
-    @Value("${memo.queries.roles}")
+    @Value("${query.roles}")
     private String rolesQuery;
 
     @Autowired

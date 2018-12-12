@@ -3,39 +3,39 @@
       xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Memo details</title>
+    <title th:text="#{message.unimemodetails.title}">Memo details</title>
 </head>
 
 <body>
-<a th:href="@{/uniMemo/list}">Back to list</a>
-<br><br>
-<table>
-    <tr>
-        <td style="font-weight: bold">Date due:</td>
-        <td th:text="${#dates.format(uniMemo.uniMemoDetails.dueDate, 'dd-MM-yyyy')}"></td>
-    </tr>
+    <form th:action="@{/uniMemo/list}" method="get">
+        <button type="Submit" th:text="#{button.list}">Memo list</button>
+    </form>
+    <br><br>
+    <table>
+        <tr>
+            <td style="font-weight: bold" th:text="#{unimemodetails.due-date}">Date due:</td>
+            <td th:text="${#dates.format(uniMemo.uniMemoDetails.dueDate, 'dd-MM-yyyy')}"></td>
+        </tr>
 
-    <tr>
-        <td style="font-weight: bold">Short description:</td>
-        <td th:text="${uniMemo.shortDescription}"></td>
-    </tr>
+        <tr>
+            <td style="font-weight: bold" th:text="#{unimemo.short-description}">Short description:</td>
+            <td th:text="${uniMemo.shortDescription}"></td>
+        </tr>
 
-    <tr>
-        <td style="font-weight: bold">Memo content:</td>
-        <td style="width: 600px; word-wrap:break-word; text-align: justify">
-            <p th:text="${uniMemo.memoText}"></p>
-        </td>
-    </tr>
+        <tr>
+            <td style="font-weight: bold" th:text="#{unimemo.memo-text}">Memo content:</td>
+            <td th:text="${uniMemo.memoText}" style="width: 600px; word-wrap:break-word; text-align: justify"></td>
+        </tr>
 
-    <tr>
-        <td style="font-weight: bold">Created on:</td>
-        <td th:text="${#dates.format(uniMemo.uniMemoDetails.createdDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
-    </tr>
+        <tr>
+            <td style="font-weight: bold" th:text="#{unimemodetails.created-date}">Created on:</td>
+            <td th:text="${#dates.format(uniMemo.uniMemoDetails.createdDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+        </tr>
 
-    <tr>
-        <td style="font-weight: bold">Last modified on:</td>
-        <td th:text="${#dates.format(uniMemo.uniMemoDetails.lastModifiedDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
-    </tr>
-</table>
+        <tr>
+            <td style="font-weight: bold" th:text="#{unimemodetails.last-modified-date}">Last modified on:</td>
+            <td th:text="${#dates.format(uniMemo.uniMemoDetails.lastModifiedDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+        </tr>
+    </table>
 </body>
 </html>
