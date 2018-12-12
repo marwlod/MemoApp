@@ -19,6 +19,7 @@ import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 @Setter
 @ToString(callSuper = true)
 public class UniMemo extends Memo {
+    // particular kind of memo - university memo
 
     @NotEmpty(message = "Field required")
     @Size(max = TEXT_LENGTH, message = "maximum " + TEXT_LENGTH + " characters")

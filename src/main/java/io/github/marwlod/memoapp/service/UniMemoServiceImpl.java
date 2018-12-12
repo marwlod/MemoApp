@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 @Service
 public class UniMemoServiceImpl implements UniMemoService {
 
-
     private UniMemoRepository uniMemoRepository;
 
     @Autowired

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class MemoErrorController implements ErrorController {
 
+    // map error types to appropriate error pages
     @GetMapping(value = "/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
@@ -28,6 +29,7 @@ public class MemoErrorController implements ErrorController {
         return "error/default";
     }
 
+    // default error path
     @Override
     public String getErrorPath() {
         return "/error";

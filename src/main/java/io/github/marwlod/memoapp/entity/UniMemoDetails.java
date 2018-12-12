@@ -16,14 +16,16 @@ import java.util.Date;
 @Getter
 @Setter
 public class UniMemoDetails extends AbstractMemoAuditable {
+    // additional three dates that define a unimemo (including inherited)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uni_memo_details_id")
     private Long id;
 
+    // can only be in the future
     @NotNull(message = "Field required")
-    @Future(message = "Date due cannot be in the past or present")
+    @Future(message = "Date due cannot be in the past nor today")
     @Temporal(value = TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "due_date")

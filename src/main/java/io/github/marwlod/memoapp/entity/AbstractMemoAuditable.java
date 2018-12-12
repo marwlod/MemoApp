@@ -16,6 +16,7 @@ import java.util.Date;
 @Setter
 @ToString
 abstract class AbstractMemoAuditable {
+    // automatically get these fields populated when creating/updating memo
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate

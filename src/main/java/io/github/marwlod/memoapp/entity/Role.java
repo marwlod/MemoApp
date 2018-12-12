@@ -23,6 +23,7 @@ public class Role {
     @Column(name = "name")
     private String name;
 
+    // each user can have many roles, many users can have the same role
     @ManyToMany(mappedBy = "roles",
             cascade = CascadeType.ALL)
     private List<User> users;

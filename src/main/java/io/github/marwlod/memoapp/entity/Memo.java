@@ -17,6 +17,10 @@ import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 @Getter
 @Setter
 @ToString
+// hibernate creates only one table for the whole inheritance tree,
+// some columns may not be populated for every object, depending on fields
+// that a particular object has, additional column for storing type of object
+// (discriminator column)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "memo_type")
 @Table(name = "memo")
@@ -32,12 +36,14 @@ abstract class Memo {
     @Column(name = "short_description")
     private String shortDescription;
 
+    // longer text field
     @Lob
     @NotEmpty(message = "Field required")
     @Size(max = LOB_LENGTH, message = "too long didn''t read, maximum " + LOB_LENGTH + " characters")
     @Column(name = "memo_text", length = LOB_LENGTH)
     private String memoText;
 
+    // don't delete owner when deleting memo
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

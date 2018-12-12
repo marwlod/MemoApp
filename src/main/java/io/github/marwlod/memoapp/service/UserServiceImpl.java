@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User saveUser(User user) {
+        // encrypt password before saving to database, add role
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Role role = roleRepository.findByName("USER");
         if (role == null) {

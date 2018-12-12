@@ -20,6 +20,7 @@ import static io.github.marwlod.memoapp.entity.EntityUtil.TEXT_LENGTH;
 @Setter
 @Table(name = "user")
 public class User {
+    // all fields required plus additional validations
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +51,7 @@ public class User {
     @Column(name = "enabled")
     private boolean enabled;
 
+    // join table containing user and role primary keys
     @ManyToMany(fetch = FetchType.EAGER,
                 cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
@@ -57,10 +59,12 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    // user can own many memos, memo may have only one owner
     @OneToMany(mappedBy = "owner",
             cascade = CascadeType.ALL)
     private List<Memo> memos;
 
+    // user not enabled when added
     public User(String email, String password, String firstName, String lastName, boolean enabled, Set<Role> roles, List<Memo> memos) {
         this.email = email;
         this.password = password;

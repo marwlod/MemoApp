@@ -35,12 +35,14 @@ public class UniMemoController {
     }
 
     @GetMapping("/list")
-    public String listMemos(@PageableDefault(
-            sort = {"uniMemoDetails.dueDate", "shortDescription"},
-            direction = Sort.Direction.ASC)
-                                        Pageable pageable, Model model) {
+    public String listMemos(@PageableDefault(sort = {"uniMemoDetails.dueDate", "shortDescription"},
+                                            direction = Sort.Direction.ASC) Pageable pageable,
+                            Model model) {
+        // get page of logged user's memos
         Page<UniMemo> page = uniMemoService.getUniMemosByOwner(getCurrentUser(), pageable);
         List<Sort.Order> sortOrders = page.getSort().stream().collect(Collectors.toList());
+
+        // extract sort parameters and add them to the model for processing
         if (sortOrders.size() > 1) {
             Sort.Order firstOrder = sortOrders.get(0);
             Sort.Order secondOrder = sortOrders.get(1);
@@ -70,6 +72,7 @@ public class UniMemoController {
 
     @GetMapping("/showUpdateForm")
     public String showUpdateForm(@RequestParam("uniMemoId") Long uniMemoId, Model model) {
+        // update form for one memo that was clicked at
         UniMemo uniMemo = uniMemoService.getUniMemoById(uniMemoId);
         model.addAttribute("uniMemo", uniMemo);
         return "unimemo-form";
