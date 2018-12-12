@@ -2,17 +2,17 @@
 memo management tool
 
 Features:
-- registration + login
-- email verification
+- validated registration and logging in
+- email verification with a token
 - CRUD operations: adding, viewing, modifying and deleting memos
+- internationalization: full support of English and Polish with ability to change language
 - paging and sorting memos
 - database persistence for each registered user
-- forms validation
-
+- more coming up...
 
 Technology stack:
 - Java 8
-- Spring (Boot, Security, AOP, MVC, Data)
-- Apache Maven
+- Spring (Boot, MVC, Security, Data, AOP)
+- Maven
 - MySQL
-- Thymeleaf + basic html
+- Thymeleaf + html
