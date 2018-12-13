@@ -19,7 +19,7 @@ import java.util.TimeZone;
 @PropertySource(value = {
         "classpath:messages.properties",
         "classpath:custom.properties",
-        "classpath:gmail.properties" })
+        "classpath:secret.properties"})
 public class MemoAppApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
