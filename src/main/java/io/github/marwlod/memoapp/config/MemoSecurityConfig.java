@@ -66,7 +66,13 @@ public class MemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // logout handled by spring
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .deleteCookies("JSESSIONID").and()
+
+                // remember me cookie
+                .rememberMe()
+                    .key("secretKey")
+                    .tokenValiditySeconds(60*60*24*7);
     }
 
 }

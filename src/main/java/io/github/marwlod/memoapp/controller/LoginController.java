@@ -40,7 +40,9 @@ public class LoginController {
     }
 
     @GetMapping(value="/login")
-    public String login(){
+    public String login(@ModelAttribute("successMessage") String successMessage,
+                        Model model){
+        model.addAttribute("successMessage", successMessage);
         return "login";
     }
 

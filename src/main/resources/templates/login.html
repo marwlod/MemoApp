@@ -40,14 +40,18 @@
             <h2 th:text="#{message.welcome}">Welcome</h2>
             <table>
                 <tr>
-                    <td><input id="email" type="text" name="email" th:placeholder="#{placeholder.email}"/><br/></td>
-                    <td><label for="email"></label></td>
+                    <td><label><input type="text" name="email" th:placeholder="#{placeholder.email}"/></label></td>
                 </tr>
+
                 <tr>
-                    <td><input type="password" th:placeholder="#{placeholder.password}" id="password" name="password"/></td>
-                    <td><label for="password"></label></td>
+                    <td><label><input type="password" name="password" th:placeholder="#{placeholder.password}"/></label></td>
                     <td th:if="${#httpServletRequest.getParameter('error') != null}" th:text="#{message.error.email-invalid}">Email and/or password invalid</td>
                 </tr>
+
+                <tr>
+                    <td><label><input type="checkbox" name="remember-me" th:text="#{message.remember}"></label></td>
+                </tr>
+
                 <tr>
                     <td><input type="submit" th:value="#{button.login}"/></td>
                 </tr>
