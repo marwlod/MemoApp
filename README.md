@@ -4,6 +4,7 @@ memo management tool
 Features:
 - validated registration and logging in
 - email verification with a token
+- remember me cookie
 - CRUD operations: adding, viewing, modifying and deleting memos
 - internationalization: full support of English and Polish with ability to change language
 - paging and sorting memos
