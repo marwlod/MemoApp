@@ -6,14 +6,19 @@
     <title th:text="#{message.unimemoform.title}">UniMemo form</title>
 </head>
 
-<body>
+<!-- preserve all previous url parameters when going back to list (using session attribute) -->
+<body th:with="page=${session.page},sortProperties=${session.sortProperties}">
     <form th:action="@{/uniMemo/list}" method="get">
+        <input type="hidden" name="page" th:value="${page.number}">
+        <input type="hidden" name="size" th:value="${page.size}">
+        <input type="hidden" name="sort" th:value="${sortProperties}">
         <button type="submit" th:text="#{button.list}">Back to list</button>
     </form>
     <br>
     <h2 th:text="#{message.unimemoform.title}">UniMemo form</h2>
 
-    <form id="uniMemoForm" action="#" th:action="@{/uniMemo/saveMemo}" th:object="${uniMemo}" th:method="post">
+    <!-- save memo or display validation errors -->
+    <form id="uniMemoForm" th:action="@{/uniMemo/saveMemo}" th:object="${uniMemo}" th:method="post">
         <input type="hidden" th:field="*{id}"/>
         <input type="hidden" th:field="*{uniMemoDetails.id}">
         <table>

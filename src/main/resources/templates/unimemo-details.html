@@ -7,9 +7,8 @@
 </head>
 
 <body>
-    <form th:action="@{/uniMemo/list}" method="get">
-        <button type="Submit" th:text="#{button.list}">Memo list</button>
-    </form>
+    <!-- after clicking go to previous page -->
+    <button type="button" onclick="window.history.go(-1)" th:text="#{button.list}">Memo list</button>
     <br><br>
     <table>
         <tr>

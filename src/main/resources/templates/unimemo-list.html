@@ -6,7 +6,7 @@
     <title th:text="#{message.unimemolist.title}">Memo list</title>
 </head>
 
-<body>
+<body th:with="page=${session.page},sortProperties=${session.sortProperties}">
     <table>
         <tr>
             <td>
@@ -28,8 +28,8 @@
                         </select>
                     </label>
                     <input type="hidden" name="page" th:value="${page.number}">
-                    <input type="hidden" name="sort" th:value="${sortProperties}">
                     <input type="hidden" name="size" th:value="${page.size}">
+                    <input type="hidden" name="sort" th:value="${sortProperties}">
                     <input type="submit" th:value="#{button.lang-change}"/>
                 </form>
             </td>

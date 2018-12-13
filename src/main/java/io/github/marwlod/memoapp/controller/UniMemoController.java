@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,19 +38,21 @@ public class UniMemoController {
     @GetMapping("/list")
     public String listMemos(@PageableDefault(sort = {"uniMemoDetails.dueDate", "shortDescription"},
                                             direction = Sort.Direction.ASC) Pageable pageable,
-                            Model model) {
+                            Model model,
+                            HttpSession session) {
         // get page of logged user's memos
         Page<UniMemo> page = uniMemoService.getUniMemosByOwner(getCurrentUser(), pageable);
+        // add page and sortProperties session attributes <- used for getting back to this exact url
+        session.setAttribute("page", page);
         List<Sort.Order> sortOrders = page.getSort().stream().collect(Collectors.toList());
 
         // extract sort parameters and add them to the model for processing
         if (sortOrders.size() > 1) {
             Sort.Order firstOrder = sortOrders.get(0);
             Sort.Order secondOrder = sortOrders.get(1);
-            model.addAttribute("sortProperties", firstOrder.getProperty() + "," + secondOrder.getProperty() + "," + firstOrder.getDirection());
+            session.setAttribute("sortProperties", firstOrder.getProperty() + "," + secondOrder.getProperty() + "," + firstOrder.getDirection());
             model.addAttribute("sortAsc", firstOrder.getDirection() == Sort.Direction.ASC);
         }
-        model.addAttribute("page", page);
         return "unimemo-list";
     }
 
@@ -60,18 +63,24 @@ public class UniMemoController {
     }
 
     @PostMapping("/saveMemo")
-    public String saveMemo(@Valid @ModelAttribute("uniMemo") UniMemo uniMemo, BindingResult bindingResult) {
+    public String saveMemo(@Valid @ModelAttribute("uniMemo") UniMemo uniMemo,
+                           BindingResult bindingResult,
+                           HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "unimemo-form";
         }
         // add current user as owner of the memo
         uniMemo.setOwner(getCurrentUser());
         uniMemoService.saveUniMemo(uniMemo);
-        return "redirect:/uniMemo/list";
+
+        // add last used url parameters for memo list page
+        String params = constructParamList(session);
+        return "redirect:/uniMemo/list" + params;
     }
 
     @GetMapping("/showUpdateForm")
-    public String showUpdateForm(@RequestParam("uniMemoId") Long uniMemoId, Model model) {
+    public String showUpdateForm(@RequestParam("uniMemoId") Long uniMemoId,
+                                 Model model) {
         // update form for one memo that was clicked at
         UniMemo uniMemo = uniMemoService.getUniMemoById(uniMemoId);
         model.addAttribute("uniMemo", uniMemo);
@@ -79,13 +88,16 @@ public class UniMemoController {
     }
 
     @GetMapping("/delete")
-    public String deleteMemo(@RequestParam("uniMemoId") Long uniMemoId) {
+    public String deleteMemo(@RequestParam("uniMemoId") Long uniMemoId,
+                             HttpSession session) {
         uniMemoService.deleteUniMemo(uniMemoId);
-        return "redirect:/uniMemo/list";
+        String params = constructParamList(session);
+        return "redirect:/uniMemo/list" + params;
     }
 
     @GetMapping("/showDetails")
-    public String showDetails(@RequestParam("uniMemoId") Long uniMemoId, Model model) {
+    public String showDetails(@RequestParam("uniMemoId") Long uniMemoId,
+                              Model model) {
         UniMemo uniMemo = uniMemoService.getUniMemoById(uniMemoId);
         model.addAttribute("uniMemo", uniMemo);
         return "unimemo-details";
@@ -94,5 +106,11 @@ public class UniMemoController {
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.findUserByEmail(authentication.getName());
+    }
+
+    // create param list to append to url from updated session attributes
+    private String constructParamList(HttpSession session) {
+        Page page = (Page) session.getAttribute("page");
+        return "?page=" + page.getNumber() + "&size=" + page.getSize() + "&sort=" + session.getAttribute("sortProperties").toString();
     }
 }
