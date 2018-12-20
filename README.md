@@ -1,5 +1,5 @@
-# MemoApp
-memo management tool
+# MemoApp - memo management tool
+DEMO: https://another-memo-app.herokuapp.com
 
 Features:
 - validated registration and logging in
