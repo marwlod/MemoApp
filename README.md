@@ -1,5 +1,6 @@
-# MemoApp - memo management tool
-DEMO: https://another-memo-app.herokuapp.com
+# MemoApp - memo management tool  
+DEMO: https://another-memo-app.herokuapp.com  
+(after 30 mins of inactivity goes to sleep and might need around 40-50 secs to wake up)  
 
 Features:
 - validated registration and login
@@ -16,4 +17,5 @@ Technology stack:
 - Spring (Boot, MVC, Security, Data, AOP)
 - Maven
 - MySQL
+- Lombok
 - Thymeleaf + HTML
